@@ -1,6 +1,6 @@
 const express = require('express');
 var cors = require("cors");
-const database = require("./database");
+let database = require("./database");
 
 const app = express();
 app.use(cors());
@@ -10,14 +10,28 @@ app.get('/', function(req, res) {
 });
 
 app.get("/students/list", function(req, res) {
-    res.send(database);
+    setTimeout(function() {
+        res.send(database);
+    }, 2000);
+
 });
 
 app.get("/students/find/:ra", function(req, res) {
-    const studentFound = database.filter(function(student) {
+    const studentFound = database.find(function(student) {
         return student.ra == req.params.ra;
     })
     res.send(studentFound);
+});
+
+app.delete("/students/delete/:ra", (req, res) => {
+    database = database.filter(function(student) {
+        return student.ra != req.params.ra;
+    });
+    console.log(database);
+    res.send({
+        result: true,
+        message: `O usuário #${req.params.ra} foi excluído com sucesso!`
+    });
 });
 
 app.listen(3000);
