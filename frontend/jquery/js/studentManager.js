@@ -29,7 +29,7 @@ $(document).ready(function() {
             })
             .then((data) => {
                 alert(data.message);
-                document.href = "studentsList.html";
+                document.location.href = "studentsList.html";
             });
     });
 

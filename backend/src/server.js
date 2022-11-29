@@ -31,7 +31,7 @@ app.post("/students/save", (req, res) => {
         email: req.body.email,
         cpf: req.body.cpf,
     });
-    res.send({ result: true, message: "Deu bom" });
+    res.send({ result: true, message: "Estudante cadastradado com sucesso!" });
 });
 
 app.delete("/students/delete/:ra", (req, res) => {
