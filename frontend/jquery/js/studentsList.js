@@ -1,7 +1,7 @@
 $(document).ready(function() {
     fetchStudentList();
     $("body").on("click", ".removeStudent", function() {
-        const ra = $(this).data('ra');
+        const ra = $(this).data("ra");
         const confirmation = confirm("Você realmente deseja excluir esse estudante");
 
         if (confirmation) {
