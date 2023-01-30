@@ -1,8 +1,5 @@
-$(document).ready(function() {
-
-    const urlSearch = new URLSearchParams(window.location.search);
-    const ra = urlSearch.get("ra");
-    if (ra) {
+$(document).ready(function () {
+    if (isEditingMode()) {
         fetchStudent(ra);
     } else {
         $(".loader").hide();
@@ -16,14 +13,27 @@ $(document).ready(function() {
             cpf: $(this).find("#cpf").val(),
             email: event.target.email.value
         };
-        fetch("http://localhost:3000/students/save", {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                }
-            })
+
+        /* PARAMÊTROS */
+        let methodEndpoint;
+        let urlEndpoint;
+
+        if (isEditingMode()) {
+            methodEndpoint = "PUT";
+            urlEndpoint = `http://localhost:3000/students/edit/${getRAForm()}`;
+        } else {
+            methodEndpoint = "POST";
+            urlEndpoint = "http://localhost:3000/students/save";
+        }
+
+        fetch(urlEndpoint, {
+            method: methodEndpoint,
+            body: JSON.stringify(body),
+            headers: {
+                Accept: "apllication/json",
+                "Content-type": "application/json",
+            },
+        })
             .then((response) => {
                 return response.json();
             })
@@ -35,12 +45,12 @@ $(document).ready(function() {
 
 });
 
-function fetchStudent(ra) {
-    fetch(`http://localhost:3000/students/find/${ra}`)
-        .then(function(response) {
+function fetchStudent() {
+    fetch(`http://localhost:3000/students/find/${getRAForm()}`)
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             const studentForm = $("#studentForm");
             studentForm.find("#name").val(data.nome);
             studentForm.find("#email").val(data.email);
@@ -49,4 +59,14 @@ function fetchStudent(ra) {
             $(".loader").hide("fast");
             $(".content-page").show("slow");
         });
+}
+
+function isEditingMode() {
+    const urlSearch = new URLSearchParams(window.location.search);
+    return urlSearch.has('ra');
+}
+
+function getRAForm() {
+    const urlSearch = new URLSearchParams(window.location.search);
+    return urlSearch.get("ra");
 }

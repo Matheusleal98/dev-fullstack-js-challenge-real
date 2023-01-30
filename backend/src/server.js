@@ -34,6 +34,22 @@ app.post("/students/save", (req, res) => {
     res.send({ result: true, message: "Estudante cadastradado com sucesso!" });
 });
 
+app.put("/students/edit/:ra", (req, res) => {
+    database = database.filter((student) => {
+        return student.ra != req.params.ra;
+    });
+    database.push({
+        nome: req.body.name,
+        ra: req.body.ra,
+        email: req.body.email,
+        cpf: req.body.cpf,
+    });
+    res.send({
+        result: true,
+        message: "O ALUNO FOI ATUALIZADO COM SUCESSO",
+    });
+});
+
 app.delete("/students/delete/:ra", (req, res) => {
     database = database.filter(function(student) {
         return student.ra != req.params.ra;
