@@ -1,6 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function () {
     fetchStudentList();
-    $("body").on("click", ".removeStudent", function() {
+    $("body").on("click", ".removeStudent", function () {
         const ra = $(this).data("ra");
         const confirmation = confirm("Você realmente deseja excluir esse estudante");
 
@@ -8,12 +8,17 @@ $(document).ready(function() {
             deleteStudent(ra);
         }
     });
+
+    $("#formSearchStudent").submit((event) => {
+        event.preventDefault();
+        fetchStudentList(event.target.searchInput.value);
+    });
 });
 
 const deleteStudent = (ra) => {
     fetch(`http://localhost:3000/students/delete/${ra}`, {
-            method: "DELETE",
-        })
+        method: "DELETE",
+    })
         .then((response) => {
             return response.json();
         })
@@ -23,11 +28,11 @@ const deleteStudent = (ra) => {
         });
 }
 
-function fetchStudentList() {
+function fetchStudentList(searchQuery = "") {
     $(".loader").show("fast")
-    $(".content-page").hide("slow");
+    $(".content-page").hide();
 
-    fetch("http://localhost:3000/students/list")
+    fetch(`http://localhost:3000/students/list/${searchQuery}`)
         .then((response) => {
             return response.json();
         })
