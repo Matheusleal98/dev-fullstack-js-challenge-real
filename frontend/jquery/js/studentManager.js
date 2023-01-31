@@ -40,7 +40,9 @@ $(document).ready(function () {
             })
             .then((data) => {
                 alert(data.message);
-                document.location.href = "studentsList.html";
+                if (data.result == true) {
+                    document.location.href = "studentsList.html";
+                }
             });
     });
 
