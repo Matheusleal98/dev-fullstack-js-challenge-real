@@ -27,56 +27,17 @@ module.exports = class StudentsController {
             });
     }
 
-    saveAction = async (req, res) => {
-        if (req.body.name == "") {
+    createAction = async (req, res) => {
+        const isCreateDataValid = await this.isCreateDataValid(req.body);
+        console.log(isCreateDataValid);
+        if (isCreateDataValid != true) {
             return res.status(400).send({
                 result: false,
-                message: "O nome é um campo obrigatório!",
-            });
-        } else if (req.body.email == "") {
-            return res.status(400).send({
-                result: false,
-                message: "O Email é um campo obrigatório!",
-            });
-        } else if (req.body.cpf == "") {
-            return res.status(400).send({
-                result: false,
-                message: "O CPF é um campo obrigatório!",
-            });
-        } else if (req.body.ra == "") {
-            return res.status(400).send({
-                result: false,
-                message: "O RA é um campo obrigatório!",
+                message: isCreateDataValid,
             });
         }
-
-        if (parseInt(req.body.ra) != req.body.ra) {
-            return res.status(400).send({
-                result: false,
-                message: "O RA deve ser um número inteiro!",
-            });
-        } else if (parseInt(req.body.cpf) != req.body.cpf) {
-            return res.status(400).send({
-                result: false,
-                message: "O CPF deve ser um número inteiro!",
-            });
-        }
-
-        const userExists = await this.app.database("students")
-            .select()
-            .where({
-                ra: req.body.ra
-            })
-            .first();
-
-        if (userExists) {
-            return res.status(400).send({
-                result: false,
-                message: "Desculpe, mas já existe um estudante cadastrado com esse RA",
-            });
-        }
-
-        return this.app.database("students")
+        return this.app
+            .database("students")
             .insert({
                 nome: req.body.name,
                 ra: req.body.ra,
@@ -93,18 +54,13 @@ module.exports = class StudentsController {
     }
 
     editAction = async (req, res) => {
-        if (req.body.name == "") {
+        const isEditDataValid = this.isEditDataValid(req.body);
+        if(isEditDataValid != true) {
             return res.status(400).send({
                 result: false,
-                message: "O nome é um campo obrigatório!",
-            });
-        } else if (req.body.email == "") {
-            return res.status(400).send({
-                result: false,
-                message: "O Email é um campo obrigatório!",
+                message: isEditDataValid,
             });
         }
-
         const userFound = await this.app.database("students").select()
             .where({ra: req.params.ra})
             .first()
@@ -154,5 +110,46 @@ module.exports = class StudentsController {
                 }
 
             });
+    }
+
+    isEditDataValid = (data) => {
+        if (data.name == "") {
+            return "O nome é um campo obrigatório!";
+        } else if (data.email == "") {
+            return "O Email é um campo obrigatório!";
+        }
+
+        return true;
+    }
+
+    isCreateDataValid = async (data) => {
+        if (data.name == "") {
+            return "O nome é um campo obrigatório!";
+        } else if (data.email == "") {
+            return "O Email é um campo obrigatório!";
+        } else if (data.cpf == "") {
+            return "O CPF é um campo obrigatório!";
+        } else if (data.ra == "") {
+            return "O RA é um campo obrigatório!";
+        }
+
+        if (parseInt(data.ra) != data.ra) {
+            return "O RA deve ser um número inteiro!";
+        } else if (parseInt(data.cpf) != data.cpf) {
+            return "O CPF deve ser um número inteiro!";
+        }
+
+        const userExists = await this.app
+            .database("students")
+            .select()
+            .where({
+                ra: data.ra,
+            })
+            .first();
+        if (userExists) {
+            return "Desculpe, mas já existe um estudante cadastrado com esse RA.";
+        }
+
+        return true;
     }
 }
