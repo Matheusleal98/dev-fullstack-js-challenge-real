@@ -3,10 +3,13 @@ import "./style.css";
 
 class StudentListPage extends React.Component {
     constructor(props) {
-        console.log("construtor was called", props);
         super(props);
         this.state = {
             studentsList: [],
+            isLoading: true,
+            formSearch: {
+                searchInput: "",
+            }
         };
     }
 
@@ -14,19 +17,45 @@ class StudentListPage extends React.Component {
         this.fetchStudentList();
     }
 
+    onClickRemoveStudent = (ra) => {
+        const confirmation = window.confirm("Você realmente deseja excluir esse estudante?");
+
+        if (confirmation) {
+            this.deleteStudent(ra);
+        }
+    };
+
+    deleteStudent = (ra) => {
+        this.setState({isLoading: true});
+        fetch(`http://localhost:3006/students/delete/${ra}`, {
+            method: "DELETE",
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                alert(data.message);
+                this.fetchStudentList();
+            });
+    }
+
+    onSubmitFormSearch = (event) => {
+        event.preventDefault();
+        this.fetchStudentList(event.target.searchInput.value);
+    };
+
     fetchStudentList = (searchQuery = "") => {
-        // $(".loader").show("fast")
-        // $(".content-page").hide();
+        this.setState({isLoading: true});
 
         fetch(`http://localhost:3006/students/list/${searchQuery}`)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                this.setState({studentsList: data});
-                console.log(data);
-                // $(".loader").hide("fast")
-                // $(".content-page").show("slow");
+                this.setState({
+                    studentsList: data,
+                    isLoading: false,
+                });
             })
             .catch((errror) => {
                 alert("Desculpe, mas não conseguimos estabelecer conexão com nosso servidor.")
@@ -34,11 +63,24 @@ class StudentListPage extends React.Component {
     }
 
     render() {
+
+        if(this.state.isLoading){
+            return <div className="loader"></div>;
+        }
+
         return (
             <div className="padding-left-right-20">
                 <div className="top-actions">
-                    <form id="formSearchStudent" className="form-search">
-                        <input type="text" name="searchInput" id="searchInput"/>
+                    <form onSubmit={this.onSubmitFormSearch} id="formSearchStudent" className="form-search">
+                        <input type="text" name="searchInput" id="searchInput" value={this.state.formSearch.searchInput}
+                               onChange={(event) => {
+                                this.setState({
+                                    formSearch: {
+                                        searchInput: event.target.value
+                                    },
+                                });
+                            }
+                        }/>
                         <button>Pesquisar</button>
                     </form>
                     <a className="btn btn-dark" href="studentManager.html">Cadastrar Aluno</a>
@@ -56,13 +98,16 @@ class StudentListPage extends React.Component {
                     {
                         this.state.studentsList.map((students) => {
                             return (
-                                <tr>
+                                <tr key={students.ra}>
                                     <td>{students.ra}</td>
                                     <td>{students.nome}</td>
                                     <td>{students.cpf}</td>
                                     <td>
                                         <a href={`studentManager.html?ra=${students.ra}`}>Editar</a>
-                                        <a className="removeStudent" data-ra={students.ra} href="#">Excluir</a>
+                                        <a className="removeStudent"
+                                           onClick={() =>
+                                                {this.onClickRemoveStudent(students.ra);
+                                           }} href="#">Excluir</a>
                                     </td>
                                 </tr>
                             );
