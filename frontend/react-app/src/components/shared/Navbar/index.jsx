@@ -6,7 +6,7 @@ const Navbar = () => {
                 Módulo Acadêmico
             </header>
             <ul className="nav-links">
-                <a className="nav-item" href="#">
+                <a className="nav-item" href="frontend/react-app/src/components/shared/Navbar/index#">
                     <li>Alunos</li>
                 </a>
             </ul>

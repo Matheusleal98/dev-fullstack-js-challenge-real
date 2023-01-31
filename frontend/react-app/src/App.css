@@ -82,29 +82,3 @@
   display: none;
 }
 
-.content-page .top-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.content-page .table-list {
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-  border-collapse: collapse;
-  border: 1px solid #dee2e6;
-}
-
-.content-page .table-list thead tr {
-  height: 50px;
-  background-color: cadetblue;
-}
-
-.content-page .table-list tr {
-  height: 40px;
-}
-
-.content-page .table-list tbody tr:nth-child(even) {
-  background-color: #ccc;
-}
