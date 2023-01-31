@@ -29,7 +29,6 @@ module.exports = class StudentsController {
 
     createAction = async (req, res) => {
         const isCreateDataValid = await this.isCreateDataValid(req.body);
-        console.log(isCreateDataValid);
         if (isCreateDataValid != true) {
             return res.status(400).send({
                 result: false,
