@@ -1,38 +1,110 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-container {
+  margin: 0px;
   display: flex;
-  flex-direction: column;
+}
+
+.padding-left-right-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.btn {
+  height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1px solid transparent;
 }
 
-.App-link {
-  color: #61dafb;
+.btn.btn-dark {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
 }
 
-@keyframes App-logo-spin {
-  from {
+.btn.btn-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.margin-left-10 {
+  margin-left: 10px;
+}
+
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+.container {
+  width: 100%;
+}
+
+.container .main-header {
+  background-color: #21252980;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+@keyframes spin {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
+}
+
+.display-none {
+  display: none;
+}
+
+.content-page .top-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-page .table-list {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid #dee2e6;
+}
+
+.content-page .table-list thead tr {
+  height: 50px;
+  background-color: cadetblue;
+}
+
+.content-page .table-list tr {
+  height: 40px;
+}
+
+.content-page .table-list tbody tr:nth-child(even) {
+  background-color: #ccc;
 }
