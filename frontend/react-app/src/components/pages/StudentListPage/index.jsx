@@ -64,59 +64,63 @@ class StudentListPage extends React.Component {
 
     render() {
 
-        if(this.state.isLoading){
+        if (this.state.isLoading) {
             return <div className="loader"></div>;
         }
 
         return (
-            <div className="padding-left-right-20">
-                <div className="top-actions">
-                    <form onSubmit={this.onSubmitFormSearch} id="formSearchStudent" className="form-search">
-                        <input type="text" name="searchInput" id="searchInput" value={this.state.formSearch.searchInput}
-                               onChange={(event) => {
-                                this.setState({
-                                    formSearch: {
-                                        searchInput: event.target.value
-                                    },
-                                });
-                            }
-                        }/>
-                        <button>Pesquisar</button>
-                    </form>
-                    <a className="btn btn-dark" href="/student-manager">Cadastrar Aluno</a>
-                </div>
-                <table id="studentsList" className="table-list">
-                    <thead>
-                    <tr>
-                        <th>Registro Acadêmico</th>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>AÇÕES</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        this.state.studentsList.map((students) => {
-                            return (
-                                <tr key={students.ra}>
-                                    <td>{students.ra}</td>
-                                    <td>{students.nome}</td>
-                                    <td>{students.cpf}</td>
-                                    <td>
-                                        <a href={`studentManager.html?ra=${students.ra}`}>Editar</a>
-                                        <a className="removeStudent"
-                                           onClick={() =>
-                                                {this.onClickRemoveStudent(students.ra);
-                                           }} href="#">Excluir</a>
-                                    </td>
-                                </tr>
-                            );
+            <>
+                <header className="main-header"> Consulta de ALunos </header>
+                <div className="padding-left-right-20">
+                    <div className="top-actions">
+                        <form onSubmit={this.onSubmitFormSearch} id="formSearchStudent" className="form-search">
+                            <input type="text" name="searchInput" id="searchInput"
+                                   value={this.state.formSearch.searchInput}
+                                   onChange={(event) => {
+                                       this.setState({
+                                           formSearch: {
+                                               searchInput: event.target.value
+                                           },
+                                       });
+                                   }
+                                   }/>
+                            <button>Pesquisar</button>
+                        </form>
+                        <a className="btn btn-dark" href="/student/add">Cadastrar Aluno</a>
+                    </div>
+                    <table id="studentsList" className="table-list">
+                        <thead>
+                        <tr>
+                            <th>Registro Acadêmico</th>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            this.state.studentsList.map((students) => {
+                                return (
+                                    <tr key={students.ra}>
+                                        <td>{students.ra}</td>
+                                        <td>{students.nome}</td>
+                                        <td>{students.cpf}</td>
+                                        <td>
+                                            <a href={`student/edit/${students.ra}`}>Editar</a>
+                                            <a className="removeStudent"
+                                               onClick={() => {
+                                                   this.onClickRemoveStudent(students.ra);
+                                               }} href="#">Excluir</a>
+                                        </td>
+                                    </tr>
+                                );
 
-                        })
-                    }
-                    </tbody>
-                </table>
-            </div>
+                            })
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </>
         );
     };
 }
