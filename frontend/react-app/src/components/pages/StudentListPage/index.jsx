@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import Loader from "../../shared/Loader";
 import {Link} from "react-router-dom";
+import Swal from "sweetalert2";
 
 class StudentListPage extends React.Component {
     constructor(props) {
@@ -20,11 +21,22 @@ class StudentListPage extends React.Component {
     }
 
     onClickRemoveStudent = (ra) => {
-        const confirmation = window.confirm("Você realmente deseja excluir esse estudante?");
 
-        if (confirmation) {
-            this.deleteStudent(ra);
-        }
+        Swal.fire({
+            title: 'Você realmente deseja excluir este estudante?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Salvar',
+            denyButtonText: `Cancelar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                this.deleteStudent(ra);
+            } else if (result.isDenied) {
+                Swal.fire('\n' +
+                    'As alterações não são salvas', '', 'info')
+            }
+        })
     };
 
     deleteStudent = (ra) => {
@@ -36,7 +48,13 @@ class StudentListPage extends React.Component {
                 return response.json();
             })
             .then((data) => {
-                alert(data.message);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Excluído com sucesso!',
+                    text:data.message,
+                    showConfirmButton: false,
+                })
+
                 this.fetchStudentList();
             });
     }

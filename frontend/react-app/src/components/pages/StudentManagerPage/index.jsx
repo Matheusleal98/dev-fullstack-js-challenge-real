@@ -2,6 +2,7 @@ import "./style.css";
 import {useState, useEffect} from "react";
 import "../../shared/Loader";
 import {Navigate, Link, useParams} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const StudentManagerPage = () => {
 
@@ -10,10 +11,17 @@ const StudentManagerPage = () => {
     const [isRedirect, setIsRedirect] = useState(false);
     const [isLoading, updateIsLoading] = useState(false);
 
+    const [fieldRa, updateFieldRa] = useState({
+        value:"",
+        isReadOnly: false,
+    });
+    const [fieldCpf, updateFieldCpf] = useState({
+        value:"",
+        isReadOnly: false,
+    });
+
     const [name, updateName] = useState("");
     const [email, updateEmail] = useState("");
-    const [cpf, updateCpf] = useState("");
-    const [ra, updateRa] = useState("");
 
     const fetchStudent = () => {
         updateIsLoading(true);
@@ -24,8 +32,14 @@ const StudentManagerPage = () => {
             .then(function (data) {
                 updateName(data.nome);
                 updateEmail(data.email);
-                updateCpf(data.cpf);
-                updateRa(data.ra);
+                updateFieldCpf({
+                    isReadOnly: true,
+                    value: data.cpf,
+                });
+                updateFieldRa({
+                    isReadOnly: true,
+                    value: data.ra
+                });
                 updateIsLoading(false);
             });
     };
@@ -33,6 +47,7 @@ const StudentManagerPage = () => {
     useEffect(() => {
         if(id){
             fetchStudent();
+            updateFieldRa()
         }
     }, []);
 
@@ -40,8 +55,8 @@ const StudentManagerPage = () => {
         event.preventDefault();
         const body = {
             name,
-            ra,
-            cpf,
+            ra: fieldRa.value,
+            cpf: fieldCpf.value,
             email,
         };
 
@@ -69,9 +84,22 @@ const StudentManagerPage = () => {
                 return response.json();
             })
             .then((data) => {
-                alert(data.message);
+
                 if (data.result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Parabéns!',
+                        text: data.message,
+                        showConfirmButton: false,
+                    });
                     setIsRedirect(true);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Desculpe...',
+                        text: data.message,
+                        showConfirmButton: false,
+                    });
                 }
             });
     };
@@ -116,20 +144,28 @@ const StudentManagerPage = () => {
                     <div className="form-group">
                         <label htmlFor="ra">RA</label>
                         <input required type="number" name="ra" id="ra"
-                               value={ra}
+                               value={fieldRa.value}
+                               readOnly={fieldRa.isReadOnly}
                                placeholder="Digite o seu RA"
                                onChange={(event) => {
-                                   updateRa(event.target.value);
+                                   updateFieldRa({
+                                       ...fieldRa,
+                                       value: event.target.value
+                                   });
                                }}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="cpf">CPF</label>
                         <input required type="number" name="cpf" id="cpf"
-                               value={cpf}
+                               value={fieldCpf.value}
+                               readOnly={fieldCpf.isReadOnly}
                                placeholder="Digite o seu CPF"
                                onChange={(event) => {
-                                   updateCpf(event.target.value);
+                                   updateFieldCpf({
+                                       ...fieldCpf,
+                                       value: event.target.value
+                                   });
                                }}
                         />
                     </div>
