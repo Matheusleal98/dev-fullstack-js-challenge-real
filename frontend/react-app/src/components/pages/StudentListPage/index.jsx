@@ -83,7 +83,7 @@ class StudentListPage extends React.Component {
                         }/>
                         <button>Pesquisar</button>
                     </form>
-                    <a className="btn btn-dark" href="studentManager.html">Cadastrar Aluno</a>
+                    <a className="btn btn-dark" href="/student-manager">Cadastrar Aluno</a>
                 </div>
                 <table id="studentsList" className="table-list">
                     <thead>
