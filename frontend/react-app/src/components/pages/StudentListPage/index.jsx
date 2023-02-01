@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import Loader from "../../shared/Loader";
+import {Link} from "react-router-dom";
 
 class StudentListPage extends React.Component {
     constructor(props) {
@@ -86,7 +87,9 @@ class StudentListPage extends React.Component {
                                    }/>
                             <button>Pesquisar</button>
                         </form>
-                        <a className="btn btn-dark" href="/student/add">Cadastrar Aluno</a>
+                        <Link to="/student/add" className="btn btn-dark">
+                            Cadastrar Aluno
+                        </Link>
                     </div>
                     <table id="studentsList" className="table-list">
                         <thead>
@@ -106,7 +109,7 @@ class StudentListPage extends React.Component {
                                         <td>{students.nome}</td>
                                         <td>{students.cpf}</td>
                                         <td>
-                                            <a href={`student/edit/${students.ra}`}>Editar</a>
+                                            <Link to={`student/edit/${students.ra}`} >Editar</Link>
                                             <a className="removeStudent"
                                                onClick={() => {
                                                    this.onClickRemoveStudent(students.ra);
