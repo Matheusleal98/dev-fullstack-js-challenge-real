@@ -91,7 +91,7 @@ class StudentListPage extends React.Component {
             <>
                 <header className="main-header"> Consulta de ALunos </header>
                 <div className="padding-left-right-20">
-                    <div className="top-actions">
+                    <div className="card">
                         <form onSubmit={this.onSubmitFormSearch} id="formSearchStudent" className="form-search">
                             <input type="text" name="searchInput" id="searchInput"
                                    value={this.state.formSearch.searchInput}
