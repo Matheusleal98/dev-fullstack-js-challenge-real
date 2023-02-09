@@ -4,18 +4,50 @@
     margin-top: 20px;
     text-align: center;
     border-collapse: collapse;
-    border: 1px solid #dee2e6;
+}
+
+.content-page .table-list .action-link {
+    margin-left: 20px;
 }
 
 .content-page .table-list thead tr {
     height: 50px;
-    background-color: cadetblue;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 3px solid #e9ecef;
 }
 
-.content-page .table-list tr {
+.content-page .table-list tbody tr {
+    border-top: 1px solid #e9ecef;
     height: 40px;
 }
 
 .content-page .table-list tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.content-page .table-list tbody tr:nth-child(even) {
     background-color: #ccc;
+}
+
+.content-page .form-search {
+    height: 40px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+}
+
+.content-page .form-search input {
+    border: 0px;
+    height: 100%;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.content-page .form-search button {
+    border: 0px;
+    border: 1px solid #ced4da;
+    height: 100%;
+    width: 100px;
+    width: 140px;
 }

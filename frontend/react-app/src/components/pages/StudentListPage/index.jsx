@@ -128,8 +128,8 @@ class StudentListPage extends React.Component {
                                             <td>{students.nome}</td>
                                             <td>{students.cpf}</td>
                                             <td>
-                                                <Link to={`student/edit/${students.ra}`}>Editar</Link>
-                                                <a className="removeStudent"
+                                                <Link className="action-link " to={`student/edit/${students.ra}`} >Editar</Link>
+                                                <a className="removeStudent action-link"
                                                    onClick={() => {
                                                        this.onClickRemoveStudent(students.ra);
                                                    }} href="#">Excluir</a>
