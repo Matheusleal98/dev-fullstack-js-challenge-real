@@ -51,7 +51,7 @@ class StudentListPage extends React.Component {
                 Swal.fire({
                     icon: 'success',
                     title: 'Excluído com sucesso!',
-                    text:data.message,
+                    text: data.message,
                     showConfirmButton: false,
                 })
 
@@ -84,12 +84,12 @@ class StudentListPage extends React.Component {
 
     render() {
         if (this.state.isLoading) {
-            return <Loader />;
+            return <Loader/>;
         }
 
         return (
             <>
-                <header className="main-header"> Consulta de ALunos </header>
+                <header className="main-header"> Consulta de ALunos</header>
                 <div className="padding-left-right-20">
                     <div className="card">
                         <form onSubmit={this.onSubmitFormSearch} id="formSearchStudent" className="form-search">
@@ -109,37 +109,39 @@ class StudentListPage extends React.Component {
                             Cadastrar Aluno
                         </Link>
                     </div>
-                    <table id="studentsList" className="table-list">
-                        <thead>
-                        <tr>
-                            <th>Registro Acadêmico</th>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>AÇÕES</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.studentsList.map((students) => {
-                                return (
-                                    <tr key={students.ra}>
-                                        <td>{students.ra}</td>
-                                        <td>{students.nome}</td>
-                                        <td>{students.cpf}</td>
-                                        <td>
-                                            <Link to={`student/edit/${students.ra}`} >Editar</Link>
-                                            <a className="removeStudent"
-                                               onClick={() => {
-                                                   this.onClickRemoveStudent(students.ra);
-                                               }} href="#">Excluir</a>
-                                        </td>
-                                    </tr>
-                                );
+                    <div className="card">
+                        <table id="studentsList" className="table-list">
+                            <thead>
+                            <tr>
+                                <th>Registro Acadêmico</th>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>AÇÕES</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                this.state.studentsList.map((students) => {
+                                    return (
+                                        <tr key={students.ra}>
+                                            <td>{students.ra}</td>
+                                            <td>{students.nome}</td>
+                                            <td>{students.cpf}</td>
+                                            <td>
+                                                <Link to={`student/edit/${students.ra}`}>Editar</Link>
+                                                <a className="removeStudent"
+                                                   onClick={() => {
+                                                       this.onClickRemoveStudent(students.ra);
+                                                   }} href="#">Excluir</a>
+                                            </td>
+                                        </tr>
+                                    );
 
-                            })
-                        }
-                        </tbody>
-                    </table>
+                                })
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </>
         );

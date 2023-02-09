@@ -12,11 +12,11 @@ const StudentManagerPage = () => {
     const [isLoading, updateIsLoading] = useState(false);
 
     const [fieldRa, updateFieldRa] = useState({
-        value:"",
+        value: "",
         isReadOnly: false,
     });
     const [fieldCpf, updateFieldCpf] = useState({
-        value:"",
+        value: "",
         isReadOnly: false,
     });
 
@@ -45,7 +45,7 @@ const StudentManagerPage = () => {
     };
 
     useEffect(() => {
-        if(id){
+        if (id) {
             fetchStudent();
             updateFieldRa()
         }
@@ -104,11 +104,11 @@ const StudentManagerPage = () => {
             });
     };
 
-    if(isRedirect) {
-        return <Navigate to="/" />;
+    if (isRedirect) {
+        return <Navigate to="/"/>;
     }
 
-    if(isLoading) {
+    if (isLoading) {
         return <div className="loader"></div>;
     }
 
@@ -118,63 +118,65 @@ const StudentManagerPage = () => {
                 Consulta de Alunos
             </header>
             <div className="content-page padding-left-right-20">
-                <form id="studentForm" className="form" action="" method="post"
-                      onSubmit={onSubmitForm}
-                >
-                    <div className="form-group">
-                        <label htmlFor="name">Nome</label>
-                        <input required type="text" name="name" id="name"
-                               value={name}
-                               placeholder="Digite seu nome"
-                               onChange={(event) => {
-                                   updateName(event.target.value);
-                               }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input required type="email" name="email" id="email"
-                               value={email}
-                               placeholder="Digite seu E-mail"
-                               onChange={(event) => {
-                                   updateEmail(event.target.value);
-                               }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="ra">RA</label>
-                        <input required type="number" name="ra" id="ra"
-                               value={fieldRa.value}
-                               readOnly={fieldRa.isReadOnly}
-                               placeholder="Digite o seu RA"
-                               onChange={(event) => {
-                                   updateFieldRa({
-                                       ...fieldRa,
-                                       value: event.target.value
-                                   });
-                               }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="cpf">CPF</label>
-                        <input required type="number" name="cpf" id="cpf"
-                               value={fieldCpf.value}
-                               readOnly={fieldCpf.isReadOnly}
-                               placeholder="Digite o seu CPF"
-                               onChange={(event) => {
-                                   updateFieldCpf({
-                                       ...fieldCpf,
-                                       value: event.target.value
-                                   });
-                               }}
-                        />
-                    </div>
-                    <div className="actions">
+                <div className="card">
+                    <form id="studentForm" className="form" action="" method="post"
+                          onSubmit={onSubmitForm}
+                    >
+                        <div className="form-group">
+                            <label htmlFor="name">Nome</label>
+                            <input required type="text" name="name" id="name"
+                                   value={name}
+                                   placeholder="Digite seu nome"
+                                   onChange={(event) => {
+                                       updateName(event.target.value);
+                                   }}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input required type="email" name="email" id="email"
+                                   value={email}
+                                   placeholder="Digite seu E-mail"
+                                   onChange={(event) => {
+                                       updateEmail(event.target.value);
+                                   }}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="ra">RA</label>
+                            <input required type="number" name="ra" id="ra"
+                                   value={fieldRa.value}
+                                   readOnly={fieldRa.isReadOnly}
+                                   placeholder="Digite o seu RA"
+                                   onChange={(event) => {
+                                       updateFieldRa({
+                                           ...fieldRa,
+                                           value: event.target.value
+                                       });
+                                   }}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="cpf">CPF</label>
+                            <input required type="number" name="cpf" id="cpf"
+                                   value={fieldCpf.value}
+                                   readOnly={fieldCpf.isReadOnly}
+                                   placeholder="Digite o seu CPF"
+                                   onChange={(event) => {
+                                       updateFieldCpf({
+                                           ...fieldCpf,
+                                           value: event.target.value
+                                       });
+                                   }}
+                            />
+                        </div>
+                        <div className="actions">
 
-                        <Link to="/" className="btn btn-warning margin-right-10">Cancelar</Link>
-                        <button className="btn">Salvar</button>
-                    </div>
-                </form>
+                            <Link to="/" className="btn btn-warning margin-right-10">Cancelar</Link>
+                            <button className="btn btn-dark">Salvar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </>
     )

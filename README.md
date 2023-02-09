@@ -1,4 +1,4 @@
-Gui é bonitão
+
 # Teste real - Full Stack Web Developer
 
 O objetivo deste desafio é avaliar as competências técnicas dos candidatos a desenvolvedor Full Stack Web na Maior Plataforma de Educação do Brasil.
