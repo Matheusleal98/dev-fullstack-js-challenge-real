@@ -3,6 +3,9 @@ import "./style.css";
 import Loader from "../../shared/Loader";
 import {Link} from "react-router-dom";
 import Swal from "sweetalert2";
+import {  } from "react-icons/gr"
+import { FaUserEdit } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 class StudentListPage extends React.Component {
     constructor(props) {
@@ -128,11 +131,11 @@ class StudentListPage extends React.Component {
                                             <td>{students.nome}</td>
                                             <td>{students.cpf}</td>
                                             <td>
-                                                <Link className="action-link " to={`student/edit/${students.ra}`} >Editar</Link>
+                                                <Link className="action-link " to={`student/edit/${students.ra}`} >< FaUserEdit /></Link>
                                                 <a className="removeStudent action-link"
                                                    onClick={() => {
                                                        this.onClickRemoveStudent(students.ra);
-                                                   }} href="#">Excluir</a>
+                                                   }} href="#">< FaTrash /></a>
                                             </td>
                                         </tr>
                                     );
